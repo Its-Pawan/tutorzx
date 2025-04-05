@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+body {
+    font-family: "Poppins", sans-serif;
+    overflow-x: hidden;
+}
+.text-gray{
+    color: rgb(112, 112, 112);
+}
+section{
+    padding: 20px 0 !important;
+}
+
+.w-fit {
+    width: fit-content;
+} 
+.hero-section .carousel button span{
+    background-color: black; 
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    
+    filter: invert(1);
+}
+.hero-section .carousel-item img {
+    height: calc(180px + 20vw);
+    border-radius: 2px;
+    aspect-ratio: 16/9;
+}
+
+.hero-section .carousel-item .carousel-caption {
+    top: 50%;
+    transform: translateY(-50%);
+    left: 10%;
+    height: 200px;
+    max-width: 350px;
+    text-align: start;
+    border-radius: 15px;
+    padding: 0 20px !important;
+}
