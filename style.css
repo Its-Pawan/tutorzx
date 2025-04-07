@@ -14,6 +14,9 @@ section{
 .w-fit {
     width: fit-content;
 } 
+.h-full{
+    height: 100vh;
+}
 .hero-section .carousel button span{
     background-color: black; 
     height: 40px;
