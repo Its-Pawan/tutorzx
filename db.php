@@ -29,9 +29,11 @@ function createTable($conn)
             phone VARCHAR(15),
             password VARCHAR(255) NOT NULL,
             role ENUM('student', 'teacher', 'admin') DEFAULT 'student',
+            otp VARCHAR(6),
+            otp_expiry DATETIME DEFAULT CURRENT_TIMESTAMP,
+            is_verified BOOLEAN DEFAULT FALSE,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-            status TINYINT(1) DEFAULT 1
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
         )";
 
         if (mysqli_query($conn, $sql)) {

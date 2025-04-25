@@ -1,8 +1,16 @@
 <?php
-include "../components/header.php"
+include "../components/header.php";
+echo $_GET("email");    
     ?>
-
 <style>
+    body {
+        background: #000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
     nav {
         display: none !important;
     }
@@ -19,7 +27,8 @@ include "../components/header.php"
         z-index: 1;
         display: flex;
         justify-content: center;
-        align-items: center
+        align-items: center;
+        background-color: black;
     }
 
     .card h6 {
@@ -72,19 +81,19 @@ include "../components/header.php"
         width: 140px
     }
 </style>
-<section class="h-full d-flex justify-content-center align-items-center">
+<section class="h-full d-flex justify-content-center align-items-center ">
     <div class="container  d-flex justify-content-center align-items-center">
         <div class="position-relative">
             <div class="text-end my-4">
 
-                <a class="btn btn-danger" href="<?php echo base_url . "/"; ?>">
-                <i class="bi bi-arrow-left"></i> Go Home
-            </a>
-        </div>
+                <a class="btn btn-danger" href="<?php echo "/"; ?>">
+                    <i class="bi bi-arrow-left"></i> Go Home
+                </a>
+            </div>
 
             <div class="card p-2 text-center">
-                <h6>Please enter the one time password <br> to verify your account</h6>
-                <form action="<?php echo base_url . "/login"; ?>" method="post">
+                <h6>Please enter the OTP <br> to verify your account</h6>
+                <form method="post">
                     <div id="otp" class="inputs d-flex flex-row justify-content-center mt-2">
                         <input class="m-2 text-center form-control rounded" type="text" id="first" maxlength="1" />
                         <input class="m-2 text-center form-control rounded" type="text" id="second" maxlength="1" />

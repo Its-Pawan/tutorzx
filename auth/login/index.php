@@ -61,7 +61,7 @@ include "../components/header.php"
                     </div>
 
                     <div class="form-group forgot-password">
-                        <a href="<?php echo base_url . "/forgot-password"; ?>">Forgot Password?</a>
+                        <a href="<?php echo "/forgot-password"; ?>">Forgot Password?</a>
                     </div>
 
                     <button type="submit" class="btn btn-primary btn-block">Login</button>
@@ -69,7 +69,7 @@ include "../components/header.php"
 
                     <div class="mt-4">
                         Don't have an
-                        account, <a class="d-inline" href="<?php echo base_url . "/signup"; ?>">Register here</a>
+                        account, <a class="d-inline" href="<?php echo "/signup"; ?>">Register here</a>
                     </div>
 
                 </form>

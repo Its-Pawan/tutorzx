@@ -84,18 +84,15 @@ $faqs = [
         'question' => 'What if I miss a class?',
         'answer' => 'Recorded sessions or makeup classes can be arranged based on tutor availability.'
     ],
-];
-
-
-
+];  
 ?>
+
 <section class="hero-section">
-    <div class="container">
+    <div class="">
         <div class="carousel slide carousel-fade" id="hero-slider" data-bs-ride="true" data-bs-touch="false">
             <div class="carousel-inner">
                 <div class="carousel-item position-relative active">
-                    <img src="<?php echo base_url . "/assets/images/h1.jpg" ?>" alt="Learning at your pace"
-                        class="d-block w-100">
+                    <img src="<?php echo "/assets/images/h1.jpg" ?>" alt="Learning at your pace" class="d-block w-100">
                     <div
                         class="carousel-caption d-none d-md-flex bg-white text-black w-fit position-absolute justify-content-center align-items-start flex-column">
                         <h5 class="fs-2 text-danger">Learn at Your Own Pace</h5>
@@ -106,8 +103,7 @@ $faqs = [
 
                 <!-- Slide 2 -->
                 <div class="carousel-item position-relative">
-                    <img src="<?php echo base_url . "/assets/images/h2.jpg" ?>" alt="Expert tutors"
-                        class="d-block w-100">
+                    <img src="<?php echo "/assets/images/h2.jpg" ?>" alt="Expert tutors" class="d-block w-100">
                     <div
                         class="carousel-caption d-none d-md-flex bg-white text-black w-fit position-absolute justify-content-center align-items-start flex-column">
                         <h5 class="fs-2 text-danger">Expert Tutors, Real Results</h5>
@@ -118,8 +114,7 @@ $faqs = [
 
                 <!-- Slide 3 -->
                 <div class="carousel-item position-relative">
-                    <img src="<?php echo base_url . "/assets/images/h3.jpg" ?>" alt="Flexible learning"
-                        class="d-block w-100">
+                    <img src="<?php echo "/assets/images/h3.jpg" ?>" alt="Flexible learning" class="d-block w-100">
                     <div
                         class="carousel-caption d-none d-md-flex bg-white text-black w-fit position-absolute justify-content-center align-items-start flex-column">
                         <h5 class="fs-2 text-danger">Anytime, Anywhere Learning</h5>
