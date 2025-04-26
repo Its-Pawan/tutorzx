@@ -1,12 +1,13 @@
 <?php
+session_start();
+
 if (file_exists("../db.php") || file_exists("../config.php")) {
     require "../db.php";
     require_once '../config.php';
-}elseif(file_exists("../../db.php") || file_exists("../../config.php")){
+} elseif (file_exists("../../db.php") || file_exists("../../config.php")) {
     require "../../db.php";
     require_once '../../config.php';
-} 
-else {
+} else {
     require_once 'config.php';
     require "db.php";
 }
@@ -54,10 +55,10 @@ $current_page = $_SERVER['REQUEST_URI'];
 
     </script> -->
 
-    <nav class="navbar navbar-expand-lg bg-white py-3">
+    <nav class="navbar main-nav navbar-expand-lg bg-white py-3">
         <div class="container">
             <!-- Logo -->
-            <a class="navbar-brand d-flex align-items-center fw-bold text-dark" href="#">
+            <a class="navbar-brand d-flex align-items-center fw-bold text-dark" href="/">
                 <span class="fs-4">Tutor<span class="text-danger">XZ.</span></span>
             </a>
 
@@ -80,11 +81,22 @@ $current_page = $_SERVER['REQUEST_URI'];
                     }
                     ?>
                 </ul>
+
                 <!-- Search, Login, and Signup -->
                 <div class="d-flex align-items-center gap-3">
-                    <a href="<?php echo "/auth/login"; ?>" class="  btn btn-outline-primary fw-semibold">Login</a>
-                    <a href="<?php echo "/auth/signup"; ?>" class="btn btn-danger fw-bold px-4">GET STARTED</a>
+                    <?php
+                    if (isset($_SESSION['is_logged_in']) && $_SESSION['is_logged_in'] === true) {
+                        ?>
+                        <button disabled class="btn btn-outline-primary  fw-semibold"> Hey, <?php
+                       echo $_SESSION['username'];
+                        ?></button>
+                        <a href="/auth/logout" class="btn btn-danger fw-bold px-4">Logout</a>
+                    <?php } else { ?>
+                        <a href="/auth/login" class="btn btn-outline-primary fw-semibold">Login</a>
+                        <a href="/auth/signup" class="btn btn-danger fw-bold px-4">GET STARTED</a>
+                    <?php } ?>
                 </div>
+
             </div>
 
 

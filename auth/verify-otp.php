@@ -53,13 +53,13 @@ if (isset($_POST['verify'])) {
 }
 ?>
 <style>
-    /* body {
+    body {
         background: #000;
         display: flex;
         justify-content: center;
         align-items: center;
         height: 100vh;
-    } */
+    }
 
     nav {
         display: none !important;
