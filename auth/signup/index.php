@@ -1,9 +1,26 @@
 <?php
-include "../components/header.php";
+include "../../components/header.php";
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require '../vendor/autoload.php';
+require '../../vendor/autoload.php';
+function deleteUnverifiedUsersAfter10Minutes($conn)
+{
+    $now = date("Y-m-d H:i:s");
+
+    $query = "DELETE FROM users 
+              WHERE is_verified = 0 
+              AND otp_expiry < '$now'";
+
+    $result = mysqli_query($conn, $query);
+
+    if ($result) {
+        $affected = mysqli_affected_rows($conn);
+        echo "$affected unverified user(s) deleted.";
+    } else {
+        echo "Error: " . mysqli_error($conn);
+    }
+}
 
 
 if (isset($_POST["create_account"])) {
@@ -13,22 +30,23 @@ if (isset($_POST["create_account"])) {
     $password = $_POST["password"];
     $cpassword = $_POST["cpassword"];
     $otp = rand(100000, 999999);
-
+    $otp_expiry = date("Y-m-d H:i:s", time() + 600);
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
     if ($password == $cpassword) {
         $sql = "SELECT * FROM users WHERE email = '$email'";
         $isUserExist = mysqli_query($conn, $sql);
         if (mysqli_num_rows($isUserExist) > 0) {
-            echo "<script>alert('Username already exists.');</script>";
-            header("Location: /login");
+            // echo "<script>alert('Username already exists.');</script>";
+            header("Location: /auth/login");
             return [
                 "status" => "error",
                 "message" => "Username already exists"
             ];
         }
-        $sql = "INSERT INTO users (full_name, email, phone, password, otp) VALUES ('$fullName', '$email', '$phone', '$password', $otp)";
+        $sql = "INSERT INTO users (full_name, email, phone, password, otp,otp_expiry) VALUES ('$fullName', '$email', '$phone', '$hashedPassword', '$otp', '$otp_expiry')";
         $result = mysqli_query($conn, $sql);
         if ($result) {
-            $email = urlencode($email);
+            deleteUnverifiedUsersAfter10Minutes($conn);
             $mail = new PHPMailer(true);
 
             try {
@@ -42,6 +60,7 @@ if (isset($_POST["create_account"])) {
                 $mail->Port = 465;
 
                 // Recipients
+
                 $mail->setFrom($email, 'TutorXZ');
                 $mail->addAddress($email); // Recipient email
 
@@ -52,10 +71,18 @@ if (isset($_POST["create_account"])) {
 
                 $mail->send();
                 echo "<script>alert('OTP sent successfully!');</script>";
-                header("Location: /verify-otp?email=$email");
+                header("Location: /auth/verify-otp.php?email=$email");
+                return [
+                    "status" => "success",
+                    "message" => "OTP sent successfully"
+                ];
 
             } catch (Exception $e) {
                 echo "<script>alert('Message could not be sent. Error: {$mail->ErrorInfo}');</script>";
+                return [
+                    "status" => "error",
+                    "message" => "Message could not be sent. Error: {$mail->ErrorInfo}"
+                ];
             }
 
 
@@ -133,7 +160,7 @@ if (isset($_POST["create_account"])) {
 
                     <div class="mt-2">
                         Already have an
-                        account, <a class="d-inline" href="<?php echo "/login"; ?>">Login here</a>
+                        account, <a class="d-inline" href="<?php echo "/auth/login"; ?>">Login here</a>
                     </div>
 
                 </form>
@@ -142,5 +169,5 @@ if (isset($_POST["create_account"])) {
     </div>
 </section>
 <?php
-include "../components/footer.php"
+include "../../components/footer.php"
     ?>

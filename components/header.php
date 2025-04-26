@@ -2,7 +2,11 @@
 if (file_exists("../db.php") || file_exists("../config.php")) {
     require "../db.php";
     require_once '../config.php';
-} else {
+}elseif(file_exists("../../db.php") || file_exists("../../config.php")){
+    require "../../db.php";
+    require_once '../../config.php';
+} 
+else {
     require_once 'config.php';
     require "db.php";
 }
@@ -78,8 +82,8 @@ $current_page = $_SERVER['REQUEST_URI'];
                 </ul>
                 <!-- Search, Login, and Signup -->
                 <div class="d-flex align-items-center gap-3">
-                    <a href="<?php echo "/login"; ?>" class="  btn btn-outline-primary fw-semibold">Login</a>
-                    <a href="<?php echo "/signup"; ?>" class="btn btn-danger fw-bold px-4">GET STARTED</a>
+                    <a href="<?php echo "/auth/login"; ?>" class="  btn btn-outline-primary fw-semibold">Login</a>
+                    <a href="<?php echo "/auth/signup"; ?>" class="btn btn-danger fw-bold px-4">GET STARTED</a>
                 </div>
             </div>
 

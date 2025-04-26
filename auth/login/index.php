@@ -1,6 +1,7 @@
 <?php
-include "../components/header.php"
-    ?>
+include "../../components/header.php";
+
+?>
 
 <style>
     .login-form {
@@ -61,15 +62,15 @@ include "../components/header.php"
                     </div>
 
                     <div class="form-group forgot-password">
-                        <a href="<?php echo "/forgot-password"; ?>">Forgot Password?</a>
+                        <a href="<?php echo "/auth/forgot-password"; ?>">Forgot Password?</a>
                     </div>
 
                     <button type="submit" class="btn btn-primary btn-block">Login</button>
 
 
-                    <div class="mt-4">
+                    <div class="my-4">
                         Don't have an
-                        account, <a class="d-inline" href="<?php echo "/signup"; ?>">Register here</a>
+                        account, <a class="d-inline" href="<?php echo "/auth/signup"; ?>">Register here</a>
                     </div>
 
                 </form>
@@ -78,5 +79,5 @@ include "../components/header.php"
     </div>
 </section>
 <?php
-include "../components/footer.php"
+include "../../components/footer.php"
     ?>

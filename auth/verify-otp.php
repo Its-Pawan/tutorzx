@@ -1,15 +1,65 @@
 <?php
 include "../components/header.php";
-echo $_GET("email");    
-    ?>
+
+
+if (isset($_POST['verify'])) {
+    $email = $_GET['email'];
+    $otp = $_POST['digit1'] . $_POST['digit2'] . $_POST['digit3'] . $_POST['digit4'] . $_POST['digit5'] . $_POST['digit6'];
+
+    if (strlen($otp) == 6) {
+        $sql = "SELECT * FROM users WHERE email = '$email'";
+        $user = mysqli_query($conn, $sql);
+        if (mysqli_num_rows($user) == 0) {
+            echo "<script>alert('Email not exists.');</script>";
+            return [
+                "status" => "error",
+                "message" => "Username already exists"
+            ];
+        }
+        $user = mysqli_fetch_assoc($user);
+        $validateOtp = $user['otp'] == $otp;
+        $isOtpExpire = strtotime($user['otp_expiry']) < time();
+        $updated_at = date("Y-m-d H:i:s");
+        if ($validateOtp) {
+            if (!$isOtpExpire) {
+                // Mark user as verified
+                $userId = $user['id'];
+                $updateQuery = "UPDATE users SET is_verified = 1, otp = '',otp_expiry='', updated_at = '$updated_at' WHERE id = $userId  AND email = '$email'";
+                mysqli_query($conn, $updateQuery);
+                // Redirect to login page
+                header("Location: ./login");
+                // echo "OTP verified successfully. Your account is now active.";
+                return [
+                    "status" => "success",
+                    "message" => "OTP verified successfully. Your account is now active."
+                ];
+
+            } else {
+                // echo "OTP expired. Please request a new one.";
+                return [
+                    "status" => "error",
+                    "message" => "OTP expired. Please request a new one."
+                ];
+            }
+        } else {
+            // echo "Invalid OTP. Please try again.";
+            return [
+                "status" => "error",
+                "message" => "Invalid OTP. Please try again."
+            ];
+        }
+    }
+
+}
+?>
 <style>
-    body {
+    /* body {
         background: #000;
         display: flex;
         justify-content: center;
         align-items: center;
         height: 100vh;
-    }
+    } */
 
     nav {
         display: none !important;
@@ -95,14 +145,22 @@ echo $_GET("email");
                 <h6>Please enter the OTP <br> to verify your account</h6>
                 <form method="post">
                     <div id="otp" class="inputs d-flex flex-row justify-content-center mt-2">
-                        <input class="m-2 text-center form-control rounded" type="text" id="first" maxlength="1" />
-                        <input class="m-2 text-center form-control rounded" type="text" id="second" maxlength="1" />
-                        <input class="m-2 text-center form-control rounded" type="text" id="third" maxlength="1" />
-                        <input class="m-2 text-center form-control rounded" type="text" id="fourth" maxlength="1" />
-                        <input class="m-2 text-center form-control rounded" type="text" id="fifth" maxlength="1" />
-                        <input class="m-2 text-center form-control rounded" type="text" id="sixth" maxlength="1" />
+                        <input class="m-2 text-center form-control rounded" name="digit1" type="text" id="first"
+                            maxlength="1" />
+                        <input class="m-2 text-center form-control rounded" name="digit2" type="text" id="second"
+                            maxlength="1" />
+                        <input class="m-2 text-center form-control rounded" name="digit3" type="text" id="third"
+                            maxlength="1" />
+                        <input class="m-2 text-center form-control rounded" name="digit4" type="text" id="fourth"
+                            maxlength="1" />
+                        <input class="m-2 text-center form-control rounded" name="digit5" type="text" id="fifth"
+                            maxlength="1" />
+                        <input class="m-2 text-center form-control rounded" name="digit6" type="text" id="sixth"
+                            maxlength="1" />
                     </div>
-                    <div class="mt-4"> <button type="submit" class="btn btn-danger px-4 validate">Validate</button>
+
+                    <div class="mt-4"> <button name="verify" type="submit"
+                            class="btn btn-danger px-4 validate">Validate</button>
                     </div>
                 </form>
             </div>
