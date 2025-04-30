@@ -87,9 +87,7 @@ $current_page = $_SERVER['REQUEST_URI'];
                     <?php
                     if (isset($_SESSION['is_logged_in']) && $_SESSION['is_logged_in'] === true) {
                         ?>
-                        <button disabled class="btn btn-outline-primary  fw-semibold"> Hey, <?php
-                       echo $_SESSION['username'];
-                        ?></button>
+                        <a href="/dashboard" disabled class="btn btn-outline-primary  fw-semibold">Dashboard</a>
                         <a href="/auth/logout" class="btn btn-danger fw-bold px-4">Logout</a>
                     <?php } else { ?>
                         <a href="/auth/login" class="btn btn-outline-primary fw-semibold">Login</a>

@@ -20,8 +20,12 @@ if (isset($_POST['login'])) {
             $_SESSION['role'] = $row['role'];
             $_SESSION['is_logged_in'] = true;
 
-            header("Location: /dashboard");
-            exit;
+            if ($row['role'] === 'admin') {
+                header("Location: /admin/dashboard");
+            } else {
+                header("Location: /dashboard");
+                exit;
+            }
         } else {
             $_SESSION['error'] = "Invalid email or password";
             header("Location: /auth/login");

@@ -11,6 +11,10 @@ if (!isset($_SESSION['is_logged_in']) || $_SESSION['is_logged_in'] !== true) {
     header('Location: ../auth/login');
     exit;
 }
+if ($_SESSION['role'] === 'admin') {
+    header('Location: /admin/dashboard');
+    exit;
+}
 $username = $_SESSION['username'];
 $email = $_SESSION['email'];
 $phone = $_SESSION['phone'];
@@ -491,15 +495,15 @@ if (isset($_POST['update_account'])) {
                 </div>
                 <div class="form-group">
                     <label for="currentPassword">Current Password</label>
-                    <input type="password" id="currentPassword" name="currentPassword" >
+                    <input type="password" id="currentPassword" name="currentPassword">
                 </div>
                 <div class="form-group">
                     <label for="newpassword">New Password</label>
-                    <input type="password" id="newpassword" name="newpassword" >
+                    <input type="password" id="newpassword" name="newpassword">
                 </div>
                 <div class="form-group">
                     <label for="cpassword">Confirm New Password</label>
-                    <input type="password" id="cpassword" name="cpassword" >
+                    <input type="password" id="cpassword" name="cpassword">
                 </div>
                 <button type="submit" class="btn btn-primary btn-block" name="update_account">Update
                     Account</button>

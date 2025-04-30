@@ -1,59 +1,8 @@
 <?php
-include "components/header.php";
-include "components/course-card.php";
+include "components/header.php"; 
 include "components/faq.php";
 
 
-$tuitionCourses = [
-    [
-        "title" => "Class 10 Science - Complete Course",
-        "description" => "Master Physics, Chemistry & Biology with live classes, notes, and practice tests.",
-        "image" => "https://images.unsplash.com/photo-1518152006812-edab29b069ac?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        "price" => 1490.00,
-        "badge" => "New Batch",
-        "badge_class" => "bg-primary"
-    ],
-    [
-        "title" => "Mathematics Foundation - Class 9",
-        "description" => "Strengthen your math concepts with detailed lectures, worksheets, and quizzes.",
-        "image" => "https://images.unsplash.com/photo-1596495577886-d920f1fb7238?q=80&w=1080",
-        "price" => 1290.00,
-        "badge" => "Most Popular",
-        "badge_class" => "bg-success"
-    ],
-    [
-        "title" => "English Grammar Crash Course",
-        "description" => "Boost your grammar skills with quick lessons, video content, and real-time doubt support.",
-        "image" => "https://images.unsplash.com/photo-1543109740-4bdb38fda756?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        "price" => 999.00,
-        "badge" => "Limited Offer",
-        "badge_class" => "bg-warning"
-    ],
-    [
-        "title" => "Live Doubt Session - Class 12",
-        "description" => "Join our expert mentors live to clear your doubts for Boards and NEET/JEE prep.",
-        "image" => "https://images.unsplash.com/photo-1531379410502-63bfe8cdaf6f?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        "price" => 499.00,
-        "badge" => "",
-        "badge_class" => "bg-danger"
-    ],
-    [
-        "title" => "CBSE Board Exam Booster - Class 10",
-        "description" => "Crash course to help you revise faster and score more in CBSE board exams.",
-        "image" => "https://images.unsplash.com/photo-1518133910546-b6c2fb7d79e3?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        "price" => 799.00,
-        "badge" => "Trending",
-        "badge_class" => "bg-info"
-    ],
-    [
-        "title" => "Spoken English for Beginners",
-        "description" => "Learn to speak fluent English with confidence through daily conversation practice and expert guidance.",
-        "image" => "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        "price" => 899.00,
-        "badge" => "Best Seller",
-        "badge_class" => "bg-secondary"
-    ]
-];
 
 $faqs = [
     [
@@ -137,24 +86,9 @@ $faqs = [
 <section class="courses">
     <div class="container py-5">
         <h1 class="text-center mb-5">Our Courses</h1>
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-5">
-            <?php
-            if ($tuitionCourses && count($tuitionCourses) > 0) {
-                foreach ($tuitionCourses as $course) {
-                    echo courseCard($course['title'], $course['description'], $course['price'], $course['image'], $course['badge'], $course['badge_class']);
-                }
-            } else {
-                echo '<div class="col-12 text-center w-100">
-            <div class="alert alert-info" role="alert">
-                <h4 class="alert-heading">No Courses Available</h4>
-                <p>Sorry, there are currently no courses available. Please check back later.</p>
-            </div>
-          </div>';
-            }
-
-
-            ?>
-        </div>
+      <?php 
+        include "./components/all-courses.php"
+      ?>
     </div>
 
 </section>

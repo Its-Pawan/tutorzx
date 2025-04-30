@@ -21,7 +21,7 @@
         transform: scale(1.05);
     }
 
-    .badge-custom {
+    .date-custom {
         position: absolute;
         top: 10px;
         right: 10px;
@@ -47,35 +47,57 @@
     }
 </style>
 
-
 <?php
-function courseCard($title, $description, $price, $image, $badge, $badge_class)
+
+
+
+function courseCard($title, $description, $price, $image, $date, $brochure)
 {
-    $badge = strlen($badge) > 0 ? "<span class='badge $badge_class badge-custom'>$badge</span>" : '';
+    $words = explode(" ", $description);
+    if (count($words) > 50) {
+        $description = implode(" ", array_slice($words, 0, 50)) . "...";
+    }
+
+    // Optional fallback if $description is empty
+    if (empty($description)) {
+        $description = 'No description available';
+    }
+    $date = strlen($date) > 0 ? "<span class='date bg-success text-white px-3 py-1 rounded-pill date-custom'>$date</span>" : '';
     $overPrice = $price + rand(99, 999);
     return '
         <div class="col-md-4 d-flex">
             <div class="card product-card border-0 rounded-4 h-100">
                 <div class="position-relative">
-                    ' . $badge . '
+                    
                     <div class="overflow-hidden">
                         <img src="' . $image . '" class="card-img-top product-image" alt="Product Image">
                     </div>
                 </div>
                 <div class="card-body p-4">
                     <h5 class="card-title mb-3 fw-bold">' . $title . '</h5>
-                    <p class="card-text text-muted mb-4">' . $description . '</p>
+                    <p class="card-text text-muted mb-4 ">' . $description . '</p>
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <span class="text-muted me-2 text-decoration-line-through">&#8377;' . $overPrice . '</span>
                             <span class="price">&#8377;' . $price . '</span>
                         </div>
-                        <button class="btn btn-custom text-white px-4 py-2 rounded-pill">
-                            Learn More <i class="fa-solid fa-arrow-right"></i>
-                        </button>
+                        <a href=' . $brochure . ' download class="btn btn-custom text-white px-4 py-2 rounded-pill">
+    Download Brochure <i class="fa-solid fa-download"></i>
+</a>
                     </div>
                 </div>
             </div>
         </div>
     ';
 }
+
+$sql = "SELECT * FROM `courses`";
+$result = mysqli_query($conn, $sql);
+
+while ($row = mysqli_fetch_assoc($result)) {
+    $date = $row['created_at'] ?? '';
+    $date = substr($date, 0, 10);
+    echo courseCard($row['title'], $row['description'], $row['price'], $row['image'], $date, $row['brochure']);
+}
+
+?>
