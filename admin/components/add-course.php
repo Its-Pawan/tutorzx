@@ -5,6 +5,7 @@ if (isset($_POST['upload_course'])) {
     $instructor = $_SESSION['username'];
     $instructor_id = $_SESSION['email'];
     $price = $_POST['price'];
+    $discounted_price = $_POST['discounted_price'];
     $image = $_FILES['image']['name'];
     $brochure = $_FILES['brochure']['name'];
     $image_tmp = $_FILES['image']['tmp_name'];
@@ -18,8 +19,8 @@ if (isset($_POST['upload_course'])) {
     $brochure = "../../pdf/$brochure";
 
     try {
-        $stmt = $conn->prepare("INSERT INTO courses (title, description, instructor, instructor_id,brochure, price, image) VALUES (?, ?, ?, ?, ?, ?, ?)");
-        $stmt->execute([$title, $description, $instructor, $instructor_id, $brochure, $price, $image]);
+        $stmt = $conn->prepare("INSERT INTO courses (title, description, instructor, instructor_id,brochure, price, discounted_price, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->execute([$title, $description, $instructor, $instructor_id, $brochure, $price, $discounted_price, $image]);
         echo "<script>alert('Course uploaded successfully!')</script>";
         echo "<script>window.open('index.php?view_courses','_self')</script>";
     } catch (PDOException $e) {
@@ -105,10 +106,18 @@ if (isset($_POST['upload_course'])) {
         <div class="row">
             <!-- Course Price -->
             <div class="col-md-6 mb-4">
-                <label for="price" class="form-label">Price ($)*</label>
+                <label for="price" class="form-label">Actual Price ($)*</label>
                 <div class="input-group">
                     <span class="input-group-text">$</span>
                     <input type="number" class="form-control" id="price" name="price" min="0" step="0.01" required>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <label for="discounted_price" class="form-label">Discounted Price ($)*</label>
+                <div class="input-group">
+                    <span class="input-group-text">$</span>
+                    <input type="number" class="form-control" id="discounted_price" name="discounted_price" min="0"
+                        step="0.01" required>
                 </div>
             </div>
         </div>

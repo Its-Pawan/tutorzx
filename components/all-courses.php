@@ -51,7 +51,7 @@
 
 
 
-function courseCard($title, $description, $price, $image, $date, $brochure)
+function courseCard($title, $description, $price, $discounted_price, $image, $date, $brochure)
 {
     $words = explode(" ", $description);
     if (count($words) > 50) {
@@ -63,12 +63,11 @@ function courseCard($title, $description, $price, $image, $date, $brochure)
         $description = 'No description available';
     }
     $date = strlen($date) > 0 ? "<span class='date bg-success text-white px-3 py-1 rounded-pill date-custom'>$date</span>" : '';
-    $overPrice = $price + rand(99, 999);
     return '
         <div class="col-md-4 d-flex">
             <div class="card product-card border-0 rounded-4 h-100">
                 <div class="position-relative">
-                    
+                    ' . $date . '
                     <div class="overflow-hidden">
                         <img src="' . $image . '" class="card-img-top product-image" alt="Product Image">
                     </div>
@@ -78,11 +77,11 @@ function courseCard($title, $description, $price, $image, $date, $brochure)
                     <p class="card-text text-muted mb-4 ">' . $description . '</p>
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
-                            <span class="text-muted me-2 text-decoration-line-through">&#8377;' . $overPrice . '</span>
-                            <span class="price">&#8377;' . $price . '</span>
+                            <span class="text-muted me-2 text-decoration-line-through">&#8377;' . $price . '</span>
+                            <span class="price">&#8377;' . $discounted_price . '</span>
                         </div>
                         <a href=' . $brochure . ' download class="btn btn-custom text-white px-4 py-2 rounded-pill">
-    Download Brochure <i class="fa-solid fa-download"></i>
+    Know Brochure <i class="fa-solid fa-download"></i>
 </a>
                     </div>
                 </div>
@@ -90,14 +89,21 @@ function courseCard($title, $description, $price, $image, $date, $brochure)
         </div>
     ';
 }
-
 $sql = "SELECT * FROM `courses`";
 $result = mysqli_query($conn, $sql);
 
-while ($row = mysqli_fetch_assoc($result)) {
-    $date = $row['created_at'] ?? '';
-    $date = substr($date, 0, 10);
-    echo courseCard($row['title'], $row['description'], $row['price'], $row['image'], $date, $row['brochure']);
-}
-
 ?>
+<div class='row mb-4'>
+    <?php
+    while ($row = mysqli_fetch_assoc($result)) {
+        $date = $row['created_at'] ?? '';
+        $date = substr($date, 0, 10);
+        echo courseCard($row['title'], $row['description'], $row['price'], $row['discounted_price'], $row['image'], $date, $row['brochure']);
+        ?>
+
+
+        <?php
+    }
+
+    ?>
+</div>
